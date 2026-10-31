@@ -1,3 +1,0 @@
-## 9.99.9 (ATTACKER_FIRST_LINE_MARKER)
-
-attacker
