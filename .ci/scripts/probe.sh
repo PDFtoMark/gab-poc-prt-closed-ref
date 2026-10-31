@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "PWNED_MARKER_9f3a: attacker script executed"
+echo "PWNED_MARKER_9f3a: attacker-controlled script executed in privileged workflow"
 echo "head=$(git rev-parse HEAD)"
 echo "milestone_env=$MILESTONE"
 echo "pr_number_env=$PR_NUMBER"
