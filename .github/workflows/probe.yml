@@ -1,0 +1,30 @@
+name: PRT Ref Probe
+on:
+  pull_request_target:
+    types: [opened, synchronize, closed]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump event refs
+        run: |
+          echo "event=${{ github.event_name }} action=${{ github.event.action }}"
+          echo "github.ref=${{ github.ref }}"
+          echo "github.sha=${{ github.sha }}"
+          echo "pr.head.sha=${{ github.event.pull_request.head.sha }}"
+          echo "pr.merge_commit_sha=${{ github.event.pull_request.merge_commit_sha }}"
+          echo "pr.base.ref=${{ github.event.pull_request.base.ref }}"
+          echo "pr.merged=${{ github.event.pull_request.merged }}"
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          sparse-checkout: .ci
+      - name: Show checked out tree
+        run: |
+          echo "--- git log"
+          git log --oneline -3
+          echo "--- .ci/scripts/probe.sh"
+          cat .ci/scripts/probe.sh || echo MISSING
+          echo "--- root file CHANGELOG.md"
+          head -2 CHANGELOG.md 2>/dev/null || echo NO_ROOT_FILE
